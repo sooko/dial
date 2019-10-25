@@ -10,6 +10,19 @@ from kivy.clock import Clock
 Builder.load_string("""
 
 <DialTacho>:
+    FloatLayout:
+        size_hint: None, None
+        pos_hint: {"center_x":0.5, "center_y":0.5}
+        size: 1.05*min(root.size), 1.05*min(root.size)
+        canvas:
+            Color:
+                rgba:0,0,0,1
+            Ellipse:
+                size: self.size     
+                pos: self.pos
+                # source:"asset/green_bolong_bg.png"
+                # angle_start:219
+                # angle_end:220+root.anime_value/50
     Image:
         pos_hint: {"center_x":0.5, "center_y":0.5}
         source:"asset/rpm.png"
@@ -182,6 +195,7 @@ Builder.load_string("""
         size_hint:1,1
         pos_hint: {"center_x":0.5, "center_y":0.5}
         color:root.warna
+    
     FloatLayout:
         size_hint: None, None
         pos_hint: {"center_x":0.5, "center_y":0.5}
@@ -195,6 +209,7 @@ Builder.load_string("""
                 source:"asset/green_bolong_bg.png"
                 angle_start:219
                 angle_end:220+root.anime_value*280/180
+        
         BoxLayout:
             orientation:"vertical"
             size_hint:1,.5
@@ -276,6 +291,51 @@ class DialTacho(FloatLayout):
     warna_alpa=ListProperty([0, 1, 1,.3])
     def __init__(self, *args, **kwargs):
         super(DialTacho, self).__init__(*args, **kwargs)
+        self.demo()
+    def demo(self):
+        self.value = 14000
+        if self.max_value < self.value:
+            self.max_value = self.value
+        self.anim = Animation(anime_value=self.value, duration=1)
+        self.anim_max = Animation(anime_max_value=self.max_value, duration=1.5)
+        self.anim.start(self)
+        self.anim_max.start(self)
+        Clock.schedule_once(self.delay_demo,2)
+    def delay_demo(self,dt):
+        self.value=0
+        self.max_value=0
+        self.anim = Animation(anime_value=self.value, duration=2)
+        self.anim_max = Animation(anime_max_value=self.max_value, duration=2)
+        self.anim.start(self)
+        self.anim_max.start(self)
+    def show_value(self,data):
+        self.value=data
+        if self.max_value<self.value:
+            self.max_value=self.value
+        self.anim = Animation(anime_value=self.value,duration=1,t="linear")
+        self.anim_max=Animation(anime_max_value=self.max_value,duration=1,t="linear")
+        self.anim.start(self)
+        self.anim_max.start(self)
+    def reset(self):
+        self.anime_value = 0
+        self.anime_max_value=0
+        self.value = 0
+        self.max_value = 0
+class DialTps(FloatLayout):
+    value = NumericProperty(0)
+    max_value = NumericProperty(0)
+    dial_text_color = ListProperty([0, 1, 1, .8])
+    rainbow_color = ListProperty([0, 1, 1, .8])
+    pucuk_color = ListProperty([0, 1, 0, 1])
+    anime_value = NumericProperty(0)
+    anime_max_value = NumericProperty(0)
+    satuan = StringProperty("PRM")
+    warna= ListProperty([0, 1, 1, 1])
+    warna_name= ListProperty([0, 1, 1, 1])
+    warna_value= ListProperty([0, 1, 1, 1])
+    warna_alpa=ListProperty([0, 1, 1,.3])
+    def __init__(self, *args, **kwargs):
+        super(DialTps, self).__init__(*args, **kwargs)
         self.demo()
     def demo(self):
         self.value = 14000
@@ -397,6 +457,8 @@ class DialSpeed(FloatLayout):
         self.anime_max_value=0
         self.value = 0
         self.max_value = 0
+
+
 # class Sm(ScreenManager):
 #     pass
 # class PsiScreen(Screen):
