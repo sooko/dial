@@ -4,8 +4,6 @@ from kivy.properties import NumericProperty,StringProperty,ListProperty
 from kivy.app import App
 from kivy.animation import Animation
 from kivy.config import Config
-from kivy.garden.graph import Graph, MeshLinePlot,LinePlot
-from kivy.uix.screenmanager import ScreenManager,Screen
 Config.set('graphics', 'height', 770)
 Config.set('graphics', 'width', 370)
 from kivy.clock import Clock
@@ -262,51 +260,6 @@ Builder.load_string("""
         canvas.after:
             PopMatrix
 
-<PsiScreen>:
-    name:"psi"
-    BoxLayout:
-        spacing:5
-        orientation:"vertical"
-        FloatLayout:
-            size_hint:1,None
-            height:"300sp"
-            pos_hint:{"center_x":.5,"center_y":.5}
-            DialPressure:
-                pos_hint:{"center_x":.5,"center_y":.5}
-                id:psi
-        Label:
-            size_hint:1,None
-            height:"30sp"
-        Label:
-            size_hint:1,None
-            height:"30sp"
-            text_size:self.size
-            text:"sooko.io"
-            color:1,1,1,.5
-            font_size:self.height
-        Button
-            background_color:0,0,0,0
-            canvas.before:
-                Color:
-                    rgba:0,1,1,.8
-                RoundedRectangle:
-                    size:self.size
-                    pos:self.pos
-                    source:"asset/gradient_blue.png"
-            text:"  Pressure Gauge"
-            color:0,0,0,1
-            font_size:self.height/2
-            size_hint:1,None
-            pos_hint:{"right":1}
-            height:"50sp"
-            halign:"left"
-            valign:"middle"
-            text_size:self.size
-        FloatLayout:
-            id:flt
-            size_hint:1,1
-            pos_hint:{"center_x":.5,"center_y":.5}
-
 """)
 class DialTacho(FloatLayout):
     value = NumericProperty(0)
@@ -444,29 +397,29 @@ class DialSpeed(FloatLayout):
         self.anime_max_value=0
         self.value = 0
         self.max_value = 0
-class Sm(ScreenManager):
-    pass
-class PsiScreen(Screen):
-    graph = Graph(xlabel=' ', ylabel='', x_ticks_minor=5,
-                  x_ticks_major=0,
-                  y_ticks_major=10,
-                  y_ticks_minor=2,
-                  y_grid_label=True, x_grid_label=False, padding=5,
-                  x_grid=True, y_grid=True,
-                  xmin=-0,
-                  xmax=50,
-                  ymin=0,
-                  ymax=100,
-                  label_options={'color': [0, 1, 1, 1], 'bold': False},
-                  border_color=[0, 1, 1, .1],
-                  tick_color=[1, 1, 1, 1])
-    plot = LinePlot(color=[1, 0, 0, 1], line_width=1.5)
-    plot.points = [(0, 0)]
-    graph.add_plot(plot)
-    clock = Clock
-    def __init__(self, *args, **kwargs):
-        super(PsiScreen, self).__init__(*args, **kwargs)
-        self.ids["flt"].add_widget(self.graph)
+# class Sm(ScreenManager):
+#     pass
+# class PsiScreen(Screen):
+#     graph = Graph(xlabel=' ', ylabel='', x_ticks_minor=5,
+#                   x_ticks_major=0,
+#                   y_ticks_major=10,
+#                   y_ticks_minor=2,
+#                   y_grid_label=True, x_grid_label=False, padding=5,
+#                   x_grid=True, y_grid=True,
+#                   xmin=-0,
+#                   xmax=50,
+#                   ymin=0,
+#                   ymax=100,
+#                   label_options={'color': [0, 1, 1, 1], 'bold': False},
+#                   border_color=[0, 1, 1, .1],
+#                   tick_color=[1, 1, 1, 1])
+#     plot = LinePlot(color=[1, 0, 0, 1], line_width=1.5)
+#     plot.points = [(0, 0)]
+#     graph.add_plot(plot)
+#     clock = Clock
+#     def __init__(self, *args, **kwargs):
+#         super(PsiScreen, self).__init__(*args, **kwargs)
+#         self.ids["flt"].add_widget(self.graph)
 
 
 
