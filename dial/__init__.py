@@ -10,8 +10,7 @@ Config.set('graphics', 'height', 770)
 Config.set('graphics', 'width', 370)
 from kivy.clock import Clock
 Builder.load_string("""
-<Label>:
-    font_name:"fonts/hemi.ttf"
+
 <DialTacho>:
     Image:
         pos_hint: {"center_x":0.5, "center_y":0.5}
